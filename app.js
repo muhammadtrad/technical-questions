@@ -92,11 +92,53 @@ function largest_contiguous_subsum2(arr){
 }
 
 list = [5, 3, -7];
-console.log(largest_contiguous_subsum2(list));
+//console.log(largest_contiguous_subsum2(list));
 
  list = [-5, -1, -3]
- console.log(largest_contiguous_subsum2(list)); // # => 8 (from [7, -6, 7])
+ //console.log(largest_contiguous_subsum2(list)); // # => 8 (from [7, -6, 7])
 
  //Time complexity is O(n) time which is linear time and O(1) memory which is constant.
 
- 
+//Big O Is Shuffle
+
+//Given three strings, return if the third string is composed 
+// of the first two strings. It also preserves the sequence of the 
+// characters. 
+
+
+function is_shuffle(str1, str2, str3) {
+   var seen_candidates = {};
+   var candidates = [[0, 0]];
+
+   while (candidates.length != 0) {
+      var temp = candidates.shift();
+      var str1_used_len = candidates[0];
+      var str2_used_len = candidates[1];
+      var str3_used_len = str1_used_len + str2_used_len;
+
+      if (str3_used_len == str3.length) {
+         return true;
+      }
+
+      if (str1[str1_used_len] == str3[str3_used_len]) {
+         var new_candidate = [str1_used_len + 1, str2_used_len];
+         if (!seen_candidates[new_candidate]) {
+            candidates.push(new_candidate);
+            seen_candidates[new_candidate] = true;
+         }
+      }
+
+      if (str2[str2_used_len] == str3[str3_used_len]) {
+         var new_candidate = [str1_used_len, str2_used_len + 1];
+         if (!seen_candidates[new_candidate]) {
+            candidates.push(new_candidate);
+            seen_candidates[new_candidate] = true;
+         }
+      }
+   }
+
+   return false;
+}
+//Time complexity O(n**2) and Space Complexity of O(n**2)
+
+console.log(is_shuffle('XXZ', 'XXY', 'XXYXXZ')); //=> true
